@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>用户空调遥控器</title>
+    <style>
+        .container {
+            width: 300px;
+            margin: auto;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .temp-display {
+            font-size: 2em;
+            margin: 10px 0;
+        }
+
+        .temp-buttons {
+            margin: 10px 0;
+        }
+
+        button[id='switch'] {
+            margin-top: 20px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>用户空调遥控器</h1>
+        <form id="myForm">
+            <label for="mode">模式:</label>
+            <select id="mode">
+                <option value="COOL">制冷</option>
+                <option value="HEAT">制热</option>
+            </select>
+
+            <label for="fanSpeed">风速:</label>
+            <select id="fanSpeed">
+                <option value="LOW">低速</option>
+                <option value="MEDIUM">中速</option>
+                <option value="HIGH">高速</option>
+            </select>
+            <div class="temp-display" id="room_temperature">{{room_temp}}</div>
+            <div class="temp-display" id="temperature">24°C</div>
+            <div class="temp-buttons">
+                <button type="button" onclick="changeTemperature(-1)">-</button>
+                <button type="button" onclick="changeTemperature(1)">+</button>
+            </div>
+
+            <button type="button" id="switch" onclick="postData('switch',true)">开/关</button>
+        </form>
+    </div>
+
+    <script>
+        var path = "127.0.0.1:3000"
+        // JavaScript 代码
+        function postData(key,value) {
+            // 创建一个新的XMLHttpRequest对象
+            var xhr = new XMLHttpRequest();
+            console.log("post");
+            //xhr.responseType = "text";
+            // 设置POST请求的URL
+            xhr.open("POST", "http://"+path+"/customer/air_conditioner/", true);
+
+            // 设置POST请求的请求头
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            //xhr.setRequestHeader("token", " 房间101"); 
+            // 定义处理响应的回调函数
+            xhr.onreadystatechange = function () {
+                //alert(xhr.readyState)
+                if (xhr.readyState === 4 && xhr.status === 200) {//
+                    // 在此处处理后端响应
+                };
+            };
+
+            // 构建要发送的数据
+            var data = key+ '=' + encodeURIComponent(value);
+            alert(data)
+            //var data = {key: value}
+            // 发送POST请求
+            xhr.send(data);
+        }
+
+
+        function changeTemperature(change) {
+            var currentTemp = parseInt(document.getElementById('temperature').innerText);
+            var newTemp = currentTemp + change;
+            
+            postData('acTemperature',newTemp)
+            document.getElementById('temperature').innerText = newTemp + "°C";
+        }
+
+        var selectElement1 = document.getElementById("acMode");
+
+        var selectElement2 = document.getElementById("fanSpeed");
+
+        // 添加事件监听器来检测选择框的变化
+        selectElement1.addEventListener("change", function() {
+            // 更新结果的文本内容
+            postData(selectElement1.id,selectElement1.value);
+
+        });
+        selectElement2.addEventListener("change", function() {
+            // 更新结果的文本内容
+            postData(selectElement1.id,selectElement2.value);
+
+        });
+
+
+        
+    </script>
+</body>
+</html>

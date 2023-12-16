@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>系统设置</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #f0f0f0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+            background-image: url('background.jpg'); /* 可替换为您喜欢的背景图片 */
+            background-size: cover;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        form {
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            width: 300px; /* 表单宽度 */
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+            color: #444;
+        }
+        input[type=number], input[type=text], select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+        input[type=submit], button {
+            width: 100%; /* 按钮宽度与输入框相同 */
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 15px;
+        }
+        input[type=submit]:hover, button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>系统设置</h1>
+
+    <form action="/receptionist/operate_set" method="post">
+        <label for="tempUpperLimit">温度上限:</label>
+        <input type="number" id="tempUpperLimit" name="tempUpperLimit" value="{{ temp_upper_limit }}">
+
+        <label for="tempLowerLimit">温度下限:</label>
+        <input type="number" id="tempLowerLimit" name="tempLowerLimit" value="{{ temp_lower_limit }}">
+
+        <label for="workMode">工作模式:</label>
+        <select id="workMode" name="workMode">
+            <option value="COOL">COOL</option>
+            <option value="HEAT">HEAT</option>
+        </select>
+
+        <label for="rateLow">低风速费率:</label>
+        <input type="text" id="rateLow" name="rateLow" value="{{ speed_rates['low'] }}">
+
+        <label for="rateMedium">中风速费率:</label>
+        <input type="text" id="rateMedium" name="rateMedium" value="{{ speed_rates['medium'] }}">
+
+        <label for="rateHigh">高风速费率:</label>
+        <input type="text" id="rateHigh" name="rateHigh" value="{{ speed_rates['high'] }}">
+
+        <input type="submit" value="提交">
+    </form>
+
+    <button onclick="window.location.href='/receptionist/homepage'" style="width: 300px;">返回主页</button>
+    <script>
+        // 获取<select>元素的引用
+        var workModeSelect = document.getElementById("workMode");
+
+        // 设置默认选项的值，例如，将默认选项设置为"HEAT"
+        var defaultValue = "{{ default_mode }}";
+
+        // 遍历<select>元素中的每个<option>元素
+        for (var i = 0; i < workModeSelect.options.length; i++) {
+            // 如果<option>的value值等于默认值
+            if (workModeSelect.options[i].value === defaultValue) {
+                // 将该<option>元素设置为选中状态
+                workModeSelect.options[i].selected = true;
+                // 跳出循环，因为我们已经找到了默认选项
+                break;
+            }
+        }
+    </script>
+</body>
+</html>

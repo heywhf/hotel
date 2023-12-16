@@ -1,0 +1,2 @@
+# hotel_all
+ qwq

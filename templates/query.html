@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>动态按钮页面</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #f0f0f0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+            background-image: url('background.jpg'); /* 可替换为您喜欢的背景图片 */
+            background-size: cover;
+        }
+        .button-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px; /* 添加间隙 */
+            margin-top: 20px;
+        }
+        .blue-button, .gray-button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .blue-button { background-color: #007bff; }
+        .gray-button { background-color: #6c757d; }
+        .blue-button:hover { background-color: #0056b3; }
+        .gray-button:hover { background-color: #545b62; }
+    </style>
+    <script>
+        function confirmAndHandle(element, isInList2, targetUrl) {
+            var confirmed = confirm("您确定选择 " + element + " 吗？");
+            if (confirmed) {
+                if (isInList2) {
+                    window.location.href = targetUrl + '?element=' + encodeURIComponent(element);
+                } else {
+                    alert('{{ message }}');
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="button-container">
+        {% for element in list1 %}
+            {% if element in list2 %}
+                <button class="blue-button" onclick="confirmAndHandle('{{ element }}', true, '{{ target_url }}')">
+                    {{ element }}
+                </button>
+            {% else %}
+                <button class="gray-button" onclick="confirmAndHandle('{{ element }}', false)">
+                    {{ element }}
+                </button>
+            {% endif %}
+        {% endfor %}
+    </div>
+</body>
+</html>

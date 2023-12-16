@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>酒店管理系统</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            background-image: url('background.jpg'); /* 可替换为您喜欢的背景图片 */
+            background-size: cover;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 40px; /* 间距 */
+        }
+        button {
+            padding: 12px 24px; /* 填充 */
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+            width: 250px; /* 按钮宽度 */
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        a {
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>你好, {{ name }}</h1>
+
+    <div class="button-container">
+        <a href="/receptionist/query?action=check_in"><button type="button">办理入住</button></a>
+        <a href="/receptionist/query?action=print_receipt"><button type="button">打印某房间详单</button></a>
+        <a href="/receptionist/query?action=check_out"><button type="button">退房</button></a>
+        <a href="/receptionist/query?action=look"><button type="button">查询或修改某房间状态</button></a>
+        <a href="/receptionist/operate_set?"><button type="button">查询并修改设置</button></a>
+    </div>
+</body>
+</html>
